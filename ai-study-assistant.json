@@ -1,0 +1,137 @@
+{
+  "name": "AI Study Assistant - Smart Learning Agent",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        0
+      ],
+      "id": "742670e6-29b2-4e2d-8cdc-e09fedc5d437",
+      "name": "When chat message received",
+      
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "You are an AI Study Assistant for engineering students.\n\nYour main tasks are:\n1. Explain Java, Python, SQL, DSA, AI, and web development.\n2. Explain every topic in simple English.\n3. Give step-by-step explanations with easy examples.\n4. Generate important viva questions and answers.\n5. Create MCQs for exam preparation.\n6. Help students understand programming errors.\n7. Explain code line by line.\n8. Use the Calculator tool for mathematical calculations.\n9. Remember the conversation context when memory is available.\n\nKeep your answers clear, accurate, and beginner-friendly.\nUse headings and examples wherever helpful."
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        224,
+        0
+      ],
+      "id": "bec09aef-be9d-4be5-bb5f-e112e00973b7",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        96,
+        208
+      ],
+      "id": "02d01c81-3fcd-4e3a-9fd1-f9d9015cb31b",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        240,
+        208
+      ],
+      "id": "d99dc5d8-a7b0-49ae-899c-c1305759a3ab",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        384,
+        208
+      ],
+      "id": "6f9772d0-e336-4dad-bd12-6e1f0d0d1884",
+      "name": "Calculator"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    
+  },
+  "nodeGroups": [],
+  "id": "I4aupcDMcnbGKQhl",
+  "tags": []
+}
